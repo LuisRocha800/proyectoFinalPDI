@@ -1,29 +1,4 @@
 function varargout = Menu_Principal(varargin)
-% MENU_PRINCIPAL MATLAB code for Menu_Principal.fig
-%      MENU_PRINCIPAL, by itself, creates a new MENU_PRINCIPAL or raises the existing
-%      singleton*.
-%
-%      H = MENU_PRINCIPAL returns the handle clto a new MENU_PRINCIPAL or the handle to
-%      the existing singleton*.
-%
-%      MENU_PRINCIPAL('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in MENU_PRINCIPAL.M with the given input arguments.
-%
-%      MENU_PRINCIPAL('Property','Value',...) creates a new MENU_PRINCIPAL or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before Menu_Principal_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to Menu_Principal_OpeningFcn via varargin.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-% See also: GUIDE, GUIDATA, GUIHANDLES
-
-% Edit the above text to modify the response to help Menu_Principal
-
-
-% Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
@@ -40,16 +15,8 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
-% End initialization code - DO NOT EDIT
 
-
-% --- Executes just before Menu_Principal is made visible.
 function Menu_Principal_OpeningFcn(hObject, eventdata, handles, varargin)
-% This function has no output args, see OutputFcn.
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to Menu_Principal (see VARARGIN)
 
 % Choose default command line output for Menu_Principal
 handles.output = hObject;
@@ -129,11 +96,7 @@ formatos = {'*.jpg;*.bmp;*.tif'};
 if nomb == 0,return,end
 fName = fullfile(ruta,nomb);
 imwrite(save,fName);
-msgbox('¡Imagen guardada con exito!');
-
-% hObject    handle to guardar (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+msgbox('¡LA IMAGEN FUE GUARDADA CON EXITO!');
 
 
 % --- Executes on button press in deshacer.
@@ -143,14 +106,6 @@ mg = handles.imgCopia;
 subplot(handles.axes2),imshow(mg);
 imagen=mg;
 guidata(hObject,handles);
-
-%imgCop = getimage(handles.axes2);
-%handles.imgCopia=imgCop;
-
-
-% hObject    handle to deshacer (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
 
 % --- Executes on button press in abrir.
@@ -172,7 +127,8 @@ imshow(imagen,mapa)
 handles.img=imagen;
 handles.imgCopia=imagen;
 handles.map=mapa;
-handles.mult=0;
+handles.mu
+lt=0;
 %handles.imgRo=imagen;
 guidata(hObject,handles);
 
@@ -474,3 +430,21 @@ function pushbutton26_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton26 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes when figure1 is resized.
+function figure1_SizeChangedFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton37.
+function pushbutton37_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton37 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in escGrises.
+function escGrises_Callback(hObject, eventdata, handles)

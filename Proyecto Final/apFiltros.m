@@ -1,29 +1,4 @@
 function varargout = apFiltros(varargin)
-% APFILTROS MATLAB code for apFiltros.fig
-%      APFILTROS, by itself, creates a new APFILTROS or raises the existing
-%      singleton*.
-%
-%      H = APFILTROS returns the handle to a new APFILTROS or the handle to
-%      the existing singleton*.
-%
-%      APFILTROS('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in APFILTROS.M with the given input arguments.
-%
-%      APFILTROS('Property','Value',...) creates a new APFILTROS or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before apFiltros_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to apFiltros_OpeningFcn via varargin.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-% See also: GUIDE, GUIDATA, GUIHANDLES
-
-% Edit the above text to modify the response to help apFiltros
-
-% Last Modified by GUIDE v2.5 10-Jun-2021 17:01:25
-
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -91,96 +66,38 @@ global reAbrir
                             MI = imread(Directorio);
                      axes(handles.axes1), subplot(1,2,1), imshow(MI);
    if (format ~= 0)
-       disp('Directorio mal Ubicado')
+       disp('EL DIRECTORIO NO EXISTE')
        reAbrir = fullfile(directory,format);
        
         
 end
 
-
-% -- Este ComboBox Sirve para APLICAR cualquier Filtro
-function pumFiltros_Callback(hObject, eventdata, handles)
+function filtroMedia_Callback(hObject, eventdata, handles)
 global Directorio;
 global auxF;
 
+%op = get(handles.pumFiltros,'Value');
 
-op = get(handles.pumFiltros,'Value');
+% Código a ejecutar al presionar el botón
+       
+    Img = handles.img;
+    imgCopy = handles.imgGriss;
 
-switch (op)          
-        case 2
-            %Ap. el Filtro de la media
-               %IN = imread(Directorio); 
-         %E_GRISES = rgb2gray(IN);
-         %Infectanto artificialmente con sal y pimienta
-              Img = handles.img;
-              imgCopy = Img;
-               %cSP = imnoise(Img,'salt & pepper',0.15); %Contaminando Imagen
-               axes(handles.axes1);
-               imshow(Img);
-               guidata(hObject,handles);
-           %Imagen ya limpiada con el filtro de la mediana
-                aFM = fspecial('average');
-              dFMed = imfilter(Img,aFM);
-               axes(handles.axes5); 
-              imshow(dFMed);
-              guidata(hObject,handles);
-    
-        case 3 
-            Img = handles.img;
-              imgCopy = Img;
-               %cSP = imnoise(Img,'salt & pepper',0.15); %Contaminando Imagen
-               axes(handles.axes1);
-               imshow(Img);
-               guidata(hObject,handles);
-           %Imagen ya limpiada con el filtro de la mediana
-              IFMedn = medfilt2(Img);
-               axes(handles.axes5); 
-              imshow(IFMedn);
-              guidata(hObject,handles);
-              
-        case 4
-            Img = handles.img;
-              imgCopy = Img;
-               %cSP = imnoise(Img,'salt & pepper',0.15); %Contaminando Imagen
-               axes(handles.axes1);
-               imshow(Img);
-               guidata(hObject,handles);
-         
-               IPWF = edge(Img,'prewitt');
-               axes(handles.axes5); 
-              imshow(IPWF);
-              guidata(hObject,handles);;
-              
-        
-        case 5 
-          Img = handles.img;
-              imgCopy = Img;
-               %cSP = imnoise(Img,'salt & pepper',0.15); %Contaminando Imagen
-               axes(handles.axes1);
-               imshow(Img);
-               guidata(hObject,handles);
-         
-              ISWF = edge(Img,'sobel');
-               axes(handles.axes5); 
-              imshow(ISWF);
-              guidata(hObject,handles);
-         
-        case 6
-             Img = handles.img;
-              imgCopy = Img;
-               %cSP = imnoise(Img,'salt & pepper',0.15); %Contaminando Imagen
-               axes(handles.axes1);
-               imshow(Img);
-               guidata(hObject,handles);
-          
-              IRWF = edge(Img,'roberts');
-               axes(handles.axes5); 
-              imshow(IRWF);
-              guidata(hObject,handles);
-        otherwise
-              disp('Opción no valida');
-end
-          
+    axes(handles.axes1);
+    imshow(Img);
+    guidata(hObject,handles);
+% Convertir la imagen a escala de grises si es necesario
+%imagen_grises = rgb2gray(imgCopy);
+% Definir el tamaño del filtro de media
+tamFiltro = 5;
+% Aplicar el filtro de media
+imgfiltro = imfilter(imgCopy, ones(tamFiltro) / tamFiltro^2);
+axes(handles.axes5);
+imshow(imgfiltro);
+guidata(hObject,handles);
+
+
+
 % --- Executes during object creation, after setting all properties.
 function pumFiltros_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to pumFiltros (see GCBO)
@@ -296,7 +213,7 @@ formatos = {'*.jpg;*.bmp;*.tif'};
 if nomb == 0,return,end
 fName = fullfile(ruta,nomb);
 imwrite(save,fName);
-msgbox('¡Imagen guardada con exito!');
+msgbox('¡LA IMAGEN FUE GUARDADA CON EXITO!');
 
 
 % --- Executes on button press in pushbutton3.
@@ -413,3 +330,132 @@ function edit4_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in pushbutton6.
+function pushbutton6_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in filtroCaja.
+function filtroCaja_Callback(hObject, eventdata, handles)
+global Directorio;
+global auxF;
+
+%op = get(handles.pumFiltros,'Value');
+
+% Código a ejecutar al presionar el botón
+       
+    Img = handles.img;
+    imgCopy = handles.imgGriss;
+
+    axes(handles.axes1);
+    imshow(Img);
+    guidata(hObject,handles);
+% Convertir la imagen a escala de grises si es necesario
+%imggris = rgb2gray(imgCopy);
+% Definir el tamaño del filtro de media
+tamFiltroCaja = 3;
+% Aplicar el filtro de media
+imgFitroCaja = imboxfilt(imgCopy, tamFiltroCaja);
+axes(handles.axes5);
+imshow(imgFitroCaja);
+guidata(hObject,handles);
+
+
+% --- Executes on button press in filtGaussiano.
+function filtGaussiano_Callback(hObject, eventdata, handles)
+global Directorio;
+global auxF;
+
+% Código a ejecutar al presionar el botón
+       
+    Img = handles.img;
+    imgCopy = handles.imgGriss;
+
+    axes(handles.axes1);
+    imshow(Img);
+    guidata(hObject,handles);
+sigma = 2;
+% Aplicar el filtro de media
+imgFitroGaussiano = imgaussfilt(imgCopy, sigma);
+handles.imgFitroGaussiano = imgFitroGaussiano;
+axes(handles.axes5);
+imshow(imgFitroGaussiano);
+guidata(hObject,handles);
+
+
+% --- Executes on button press in limpimgBorr.
+function limpimgBorr_Callback(hObject, eventdata, handles)
+global Directorio;
+global auxF;
+
+Img = handles.img;
+axes(handles.axes5);
+imshow(Img);
+guidata(hObject,handles);
+
+
+% --- Executes on button press in escalagrisesConv.
+function escalagrisesConv_Callback(hObject, eventdata, handles)
+Img = handles.img;
+imgCopy = Img;
+% Convertir la imagen a escala de grises si es necesario
+imgGriss = rgb2gray(imgCopy);
+handles.imgGriss = imgGriss;
+axes(handles.axes5);
+imshow(imgGriss);
+guidata(hObject,handles);
+
+
+% --- Executes on button press in rgb.
+function rgb_Callback(hObject, eventdata, handles)
+
+
+% --- Executes on button press in filtMediana.
+function filtMediana_Callback(hObject, eventdata, handles)
+global Directorio;
+global auxF;
+       
+    imgCopy = handles.imgGriss;
+
+    filt = medfilt2(imgCopy, [3, 3]);
+    axes(handles.axes5);
+imshow(filt);
+guidata(hObject,handles);
+
+% --- Executes on button press in filtModa.
+function filtModa_Callback(hObject, eventdata, handles)
+global Directorio;
+global auxF;
+       
+    imgCopy = handles.imgGriss;
+
+tamWindow = 3;
+[rows, cols] = size(imgCopy);
+
+fimagen = zeros(rows, cols);
+
+% Aplicar el filtro de moda
+for i = 1:rows
+    for j = 1:cols
+        % Obtener la ventana alrededor del píxel actual
+        row_start = max(1, i - floor(tamWindow/2));
+        row_end = min(rows, i + floor(tamWindow/2));
+        col_start = max(1, j - floor(tamWindow/2));
+        col_end = min(cols, j + floor(tamWindow/2));
+        window = imgCopy(row_start:row_end, col_start:col_end);
+        
+        % Calcular la moda de la ventana
+        window_vector = window(:);
+        mode_value = mode(window_vector);
+        
+        % Asignar el valor de la moda al píxel actual en la imagen filtrada
+        fimagen(i, j) = mode_value;
+    end
+end
+axes(handles.axes5);
+imshow(fimagen, []);
+guidata(hObject,handles);
