@@ -30,7 +30,7 @@ imshow(imagen,mapa)
 handles.img=imagen;
 handles.map=mapa;
 %handles.imgRe=imagen;
-handles.imgCopia=imagen;
+%handles.imgCopia=imagen;
 guidata(hObject,handles);
 
 % This function has no output args, see OutputFcn.
@@ -458,4 +458,73 @@ for i = 1:rows
 end
 axes(handles.axes5);
 imshow(fimagen, []);
+guidata(hObject,handles);
+
+
+% --- Executes on button press in prewitt.
+function prewitt_Callback(hObject, eventdata, handles)
+
+global Directorio;
+global auxF;
+       
+    imgCopy = handles.imgGriss;
+
+    % Aplicar el filtro de Prewitt
+filtro_x = [-1, 0, 1; -1, 0, 1; -1, 0, 1];
+filtro_y = [-1, -1, -1; 0, 0, 0; 1, 1, 1];
+
+imgPrewittX = imfilter(double(imgCopy), filtro_x);
+imgPrewittY = imfilter(double(imgCopy), filtro_y);
+
+% Calcular la magnitud de los gradientes
+magnitud_gradiente = sqrt(imgPrewittX.^2 + imgPrewittY.^2);
+
+axes(handles.axes5);
+imshow(imgPrewittX);
+guidata(hObject,handles);
+
+
+% --- Executes on button press in sobel.
+function sobel_Callback(hObject, eventdata, handles)
+
+global Directorio;
+global auxF;
+       
+    imgCopy = handles.imgGriss;
+
+    filtroXSobel = [-1, 0, 1; -2, 0, 2; -1, 0, 1];
+    filtroYSobel = [-1, -2, -1; 0, 0, 0; 1, 2, 1];
+
+imgSobelX = imfilter(double(imgCopy), filtroXSobel);
+imgSobelY = imfilter(double(imgCopy), filtroYSobel);
+
+% Calcular la magnitud de los gradientes
+mgCrecSobel = sqrt(imgSobelX.^2 + imgSobelY.^2);
+
+
+axes(handles.axes5);
+imshow(imgSobelX);
+guidata(hObject,handles);
+
+
+% --- Executes on button press in roberts.
+function roberts_Callback(hObject, eventdata, handles)
+
+global Directorio;
+global auxF;
+       
+    imgCopy = handles.imgGriss;
+
+    filtroXRoberts = [1, 0; 0, -1];
+    filtroYRoberts = [0, 1; -1, 0];
+
+imgRobertsX = imfilter(double(imgCopy), filtroXRoberts);
+imgRobertsY = imfilter(double(imgCopy), filtroYRoberts);
+
+% Calcular la magnitud de los gradientes
+mgCrecRoberts = sqrt(imgRobertsX.^2 + imgRobertsY.^2);
+
+
+axes(handles.axes5);
+imshow(imgRobertsX);
 guidata(hObject,handles);

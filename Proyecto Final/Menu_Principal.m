@@ -102,9 +102,11 @@ msgbox('¡LA IMAGEN FUE GUARDADA CON EXITO!');
 % --- Executes on button press in deshacer.
 function deshacer_Callback(hObject, eventdata, handles)
 global imagen
-mg = handles.imgCopia;
-subplot(handles.axes2),imshow(mg);
-imagen=mg;
+global Directorio
+
+imgorig = handles.imgCopia;
+subplot(handles.axes2),imshow(imgorig);
+%imagen=mg;
 guidata(hObject,handles);
 
 
@@ -127,9 +129,8 @@ imshow(imagen,mapa)
 handles.img=imagen;
 handles.imgCopia=imagen;
 handles.map=mapa;
-handles.mu
+%handles.mu
 lt=0;
-%handles.imgRo=imagen;
 guidata(hObject,handles);
 
 % hObject    handle to abrir (see GCBO)
