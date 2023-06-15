@@ -1,30 +1,5 @@
 function varargout = Ecualizacion(varargin)
-% ECUALIZACION MATLAB code for Ecualizacion.fig
-%      ECUALIZACION, by itself, creates a new ECUALIZACION or raises the existing
-%      singleton*.
-%
-%      H = ECUALIZACION returns the handle to a new ECUALIZACION or the handle to
-%      the existing singleton*.
-%
-%      ECUALIZACION('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in ECUALIZACION.M with the given input arguments.
-%
-%      ECUALIZACION('Property','Value',...) creates a new ECUALIZACION or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before Ecualizacion_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to Ecualizacion_OpeningFcn via varargin.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-% See also: GUIDE, GUIDATA, GUIHANDLES
 
-% Edit the above text to modify the response to help Ecualizacion
-
-% Last Modified by GUIDE v2.5 17-Jun-2020 18:26:29
-
-% Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
@@ -83,17 +58,16 @@ function varargout = Ecualizacion_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% ---Mostrar imagen con Histograma Normal
 function pbHNormal_Callback(hObject, eventdata, handles)
 
-Ir = imread('ySFdo.jpg');
+
+Ir = imread('');
 
 
 [cont,x] = imhist(Ir);
 axes(handles.img_ent), subplot(2,2,1), imshow(Ir); title('Imagen Sin Ecualizar'),
                      subplot(2,2,2), imhist(Ir); title('Histograma Original'),
      
-% --- Ejecuta el Histograma ya Ecualizado..
 function pbHEcualizado_Callback(hObject, eventdata, handles)
 % opc = get(handles.rotar,'Value');
 
@@ -118,20 +92,14 @@ end
    end
    
    
-   
-   %figure('Name','Ecualización','NumberTitle','off'), 
-   
      axes(handles.axes2), 
-     imshow(ImpE),  title('Img-Transformada');
+     imshow(ImpE),  title('Imagen Transformada');
     guidata(hObject,handles);
     
     axes(handles.axes5), 
-     imhist(ImpE),  title('Histograma-Ecualizado');
+     imhist(ImpE),  title('Histograma Ecualizado');
     guidata(hObject,handles);
     
-     %subplot(2,1,1), imshow(ImpE),  title('Img-Transformada'),
-     %subplot(2,1,2), imhist(ImpE),  title('Histograma-Ecualizado');
-%set(handles.axes2,'UserData',ImpE);
 
 
 % --- Executes on button press in equal_ima.
@@ -146,10 +114,6 @@ global mapa;
 if nombre==0
     return
 end
-%imagen= rgb2gray(imagen);
-%axes(handles.hist_ent);
-%imhist(imagen);
-%guidata(hObject,handles);
 
 [imagen,mapa]=imread(fullfile(dire,nombre));
 axes(handles.img_ent);
@@ -163,9 +127,9 @@ guidata(hObject,handles);
 
  
 
-% --- Executes on button press in pushbutton5.
-function pushbutton5_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton5 (see GCBO)
+% --- Executes on button press in btnEcualizar.
+function btnEcualizar_Callback(hObject, eventdata, handles)
+% hObject    handle to btnEcualizar (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -185,10 +149,6 @@ end
          imagen(i,j) = H(Acum+1)*(255/(mE*nE));
        end
    end
-   
-   
-   
-   %figure('Name','Ecualización','NumberTitle','off'), 
    
     axes(handles.axes2), 
     imshow(imagen);
@@ -219,9 +179,9 @@ axis off
 % Hint: place code in OpeningFcn to populate Portada
 
 
-% --- Executes on button press in save_ec.
-function save_ec_Callback(hObject, eventdata, handles)
-% hObject    handle to save_ec (see GCBO)
+% --- Executes on button press in guardarEcualizacion.
+function guardarEcualizacion_Callback(hObject, eventdata, handles)
+% hObject    handle to guardarEcualizacion (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 save = getimage(handles.axes2);
@@ -248,15 +208,29 @@ close(Ecualizacion);
 %Partes1y2
 
 
-% --- Executes on button press in pushbutton10.
-function pushbutton10_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton10 (see GCBO)
+% --- Executes on button press in btnHistograma.
+function btnHistograma_Callback(hObject, eventdata, handles)
+% hObject    handle to btnHistograma (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
 imagen=handles.img;
-axes(handles.hist_ent);
+axes(handles.histogramaOrginal);
 imhist(imagen);
 handles.imgRo=imagen;
 
 guidata(hObject,handles);
+
+
+% --- Executes on button press in pushbutton17.
+function pushbutton17_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton17 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton16.
+function pushbutton16_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton16 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)

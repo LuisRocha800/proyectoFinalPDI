@@ -250,13 +250,11 @@ inv_fot(handles);
 guidata(hObject,handles);
 
 
-% --- Executes on button press in pushbutton14.
-function pushbutton14_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton14 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% --- Executes on button press in inversionBinaria.
+function inversionBinaria_Callback(hObject, eventdata, handles)
 inv_bin(handles);
 guidata(hObject,handles);
+
 
 % --- Executes on button press in pushbutton15.
 function pushbutton15_Callback(hObject, eventdata, handles)
@@ -319,10 +317,12 @@ if imagen == 0
 end
 imagen= imcomplement(imagen);
 axes(handles.axes2)
-imshow(imagen,mapa)
+imshow(imagen)
 handles.img=imagen;
 handles.map=mapa;
 handles.mult=0;
+
+
 
 function inv_fot(handles)
 global nombre
@@ -347,11 +347,24 @@ imagen = getimage(handles.axes2);
 if imagen == 0
     return
 end
-[filename,pathname]=uigetfile('*.jpg;*.tif;*.bmp;*.ppm;*.mdl','Abrir');
+[filename,pathname]=uigetfile('*.jpg;*.tif;*.bmp;*.ppm;*.mdl;*.png','Abrir');
 img2=imread(filename);
-imagen= imagen + img2;
+
+SizeImg1 = size(imagen);
+sizeImg2 = size(img2);
+
+if prod(SizeImg1) > prod(sizeImg2)
+    img1Sized = imresize(imagen, sizeImg2(1:2));
+    img2Sized = sizeImg2;
+else
+    img1Sized = imagen;
+    img2Sized = imresize(img2, SizeImg1(1:2));
+end
+
+imgAdd = img1Sized + img2Sized;
+
 axes(handles.axes2)
-imshow(imagen,mapa)
+imshow(imgAdd)
 handles.img=imagen;
 handles.map=mapa;
 handles.mult=0;
@@ -366,9 +379,20 @@ if imagen == 0
 end
 [filename,pathname]=uigetfile('*.jpg;*.tif;*.bmp;*.ppm;*.mdl','Abrir');
 img2=imread(filename);
-imagen= imagen - img2;
+SizeImg1 = size(imagen);
+sizeImg2 = size(img2);
+
+if prod(SizeImg1) > prod(sizeImg2)
+    img1Sized = imresize(imagen, sizeImg2(1:2));
+    img2Sized = sizeImg2;
+else
+    img1Sized = imagen;
+    img2Sized = imresize(img2, SizeImg1(1:2));
+end
+
+imgSust = img1Sized - img2Sized;
 axes(handles.axes2)
-imshow(imagen,mapa)
+imshow(imgSust)
 handles.img=imagen;
 handles.map=mapa;
 handles.mult=0;
@@ -449,3 +473,13 @@ function pushbutton37_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in escGrises.
 function escGrises_Callback(hObject, eventdata, handles)
+
+
+% --- Executes on button press in pushbutton35.
+function pushbutton35_Callback(hObject, eventdata, handles)
+(Ecualizacion)
+
+
+% --- Executes on button press in irCollage.
+function irCollage_Callback(hObject, eventdata, handles)
+(Collage)

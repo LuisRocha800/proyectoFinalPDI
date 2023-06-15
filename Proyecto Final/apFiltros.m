@@ -76,9 +76,6 @@ function filtroMedia_Callback(hObject, eventdata, handles)
 global Directorio;
 global auxF;
 
-%op = get(handles.pumFiltros,'Value');
-
-% Código a ejecutar al presionar el botón
        
     Img = handles.img;
     imgCopy = handles.imgGriss;
@@ -86,11 +83,9 @@ global auxF;
     axes(handles.axes1);
     imshow(Img);
     guidata(hObject,handles);
-% Convertir la imagen a escala de grises si es necesario
-%imagen_grises = rgb2gray(imgCopy);
-% Definir el tamaño del filtro de media
+
 tamFiltro = 5;
-% Aplicar el filtro de media
+
 imgfiltro = imfilter(imgCopy, ones(tamFiltro) / tamFiltro^2);
 axes(handles.axes5);
 imshow(imgfiltro);
@@ -126,24 +121,6 @@ function pumContor_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
-% --- Executes on selection change in pumBordes.
-% function pumBordes_Callback(hObject, eventdata, handles)
-% %global directory;
-% 
-% optEdge = get(handles.pumBordes,'Value');
-%  
-%  switch (optEdge)    
-%      
-%       
-%           %     [gR ,t3]  = edge(cEG_R,mRV);
-%          
-%      otherwise
-%              disp('ERRROR: opción incorrecta');
-%          
-%  end
-%  
 
 % --- Executes during object creation, after setting all properties.
 function pumBordes_CreateFcn(hObject, eventdata, handles)
@@ -344,9 +321,6 @@ function filtroCaja_Callback(hObject, eventdata, handles)
 global Directorio;
 global auxF;
 
-%op = get(handles.pumFiltros,'Value');
-
-% Código a ejecutar al presionar el botón
        
     Img = handles.img;
     imgCopy = handles.imgGriss;
@@ -354,11 +328,8 @@ global auxF;
     axes(handles.axes1);
     imshow(Img);
     guidata(hObject,handles);
-% Convertir la imagen a escala de grises si es necesario
-%imggris = rgb2gray(imgCopy);
-% Definir el tamaño del filtro de media
+
 tamFiltroCaja = 3;
-% Aplicar el filtro de media
 imgFitroCaja = imboxfilt(imgCopy, tamFiltroCaja);
 axes(handles.axes5);
 imshow(imgFitroCaja);
@@ -370,7 +341,6 @@ function filtGaussiano_Callback(hObject, eventdata, handles)
 global Directorio;
 global auxF;
 
-% Código a ejecutar al presionar el botón
        
     Img = handles.img;
     imgCopy = handles.imgGriss;
@@ -379,7 +349,7 @@ global auxF;
     imshow(Img);
     guidata(hObject,handles);
 sigma = 2;
-% Aplicar el filtro de media
+
 imgFitroGaussiano = imgaussfilt(imgCopy, sigma);
 handles.imgFitroGaussiano = imgFitroGaussiano;
 axes(handles.axes5);
@@ -402,8 +372,7 @@ guidata(hObject,handles);
 function escalagrisesConv_Callback(hObject, eventdata, handles)
 Img = handles.img;
 imgCopy = Img;
-% Convertir la imagen a escala de grises si es necesario
-imgGriss = rgb2gray(imgCopy);
+imgGriss = rgb2gray(Img);
 handles.imgGriss = imgGriss;
 axes(handles.axes5);
 imshow(imgGriss);
@@ -438,21 +407,20 @@ tamWindow = 3;
 
 fimagen = zeros(rows, cols);
 
-% Aplicar el filtro de moda
+
 for i = 1:rows
     for j = 1:cols
-        % Obtener la ventana alrededor del píxel actual
+       
         row_start = max(1, i - floor(tamWindow/2));
         row_end = min(rows, i + floor(tamWindow/2));
         col_start = max(1, j - floor(tamWindow/2));
         col_end = min(cols, j + floor(tamWindow/2));
         window = imgCopy(row_start:row_end, col_start:col_end);
         
-        % Calcular la moda de la ventana
+     
         window_vector = window(:);
         mode_value = mode(window_vector);
-        
-        % Asignar el valor de la moda al píxel actual en la imagen filtrada
+    
         fimagen(i, j) = mode_value;
     end
 end
@@ -466,22 +434,12 @@ function prewitt_Callback(hObject, eventdata, handles)
 
 global Directorio;
 global auxF;
-       
-    imgCopy = handles.imgGriss;
-
-    % Aplicar el filtro de Prewitt
-filtro_x = [-1, 0, 1; -1, 0, 1; -1, 0, 1];
-filtro_y = [-1, -1, -1; 0, 0, 0; 1, 1, 1];
-
-imgPrewittX = imfilter(double(imgCopy), filtro_x);
-imgPrewittY = imfilter(double(imgCopy), filtro_y);
-
-% Calcular la magnitud de los gradientes
-magnitud_gradiente = sqrt(imgPrewittX.^2 + imgPrewittY.^2);
-
-axes(handles.axes5);
-imshow(imgPrewittX);
-guidata(hObject,handles);
+imgCopy = handles.imgGriss; 
+filtro_prewitt = fspecial('prewitt');
+   imgfiltroPrewitt = imfilter(imgCopy, filtro_prewitt);
+   axes(handles.axes5);
+   imshow(imgfiltroPrewitt);
+   guidata(hObject,handles);
 
 
 % --- Executes on button press in sobel.
@@ -490,20 +448,11 @@ function sobel_Callback(hObject, eventdata, handles)
 global Directorio;
 global auxF;
        
-    imgCopy = handles.imgGriss;
-
-    filtroXSobel = [-1, 0, 1; -2, 0, 2; -1, 0, 1];
-    filtroYSobel = [-1, -2, -1; 0, 0, 0; 1, 2, 1];
-
-imgSobelX = imfilter(double(imgCopy), filtroXSobel);
-imgSobelY = imfilter(double(imgCopy), filtroYSobel);
-
-% Calcular la magnitud de los gradientes
-mgCrecSobel = sqrt(imgSobelX.^2 + imgSobelY.^2);
-
-
+imgCopy = handles.imgGriss;
+filtro_sobel = fspecial('sobel');
+imgFiltroSobel = imfilter(imgCopy, filtro_sobel);
 axes(handles.axes5);
-imshow(imgSobelX);
+imshow(imgFiltroSobel);
 guidata(hObject,handles);
 
 
@@ -513,18 +462,66 @@ function roberts_Callback(hObject, eventdata, handles)
 global Directorio;
 global auxF;
        
-    imgCopy = handles.imgGriss;
+imgCopy = handles.img;
 
-    filtroXRoberts = [1, 0; 0, -1];
-    filtroYRoberts = [0, 1; -1, 0];
+kernelHorizontal = [1 0; 0 -1];
+kernelVertical = [0 1; -1 0];
 
-imgRobertsX = imfilter(double(imgCopy), filtroXRoberts);
-imgRobertsY = imfilter(double(imgCopy), filtroYRoberts);
+filtroHorizontal = imfilter(imgCopy, kernelHorizontal);
+filtroVertical = imfilter(imgCopy, kernelVertical);
 
-% Calcular la magnitud de los gradientes
-mgCrecRoberts = sqrt(imgRobertsX.^2 + imgRobertsY.^2);
-
+imagenFiltRoberts = abs(filtroHorizontal) + abs(filtroVertical);
 
 axes(handles.axes5);
-imshow(imgRobertsX);
+imshow(imagenFiltRoberts, []);
 guidata(hObject,handles);
+
+
+% --- Executes on button press in filtroTipoN.
+function filtroTipoN_Callback(hObject, eventdata, handles)
+
+global Directorio;
+global auxF;
+       
+imgCopy = handles.img;
+
+
+    tamano_filtro_str = get(handles.txtParametroN, 'String');
+
+    sizeFiltro = str2double(tamano_filtro_str);
+
+    % Verifica si el valor es válido
+    if isnan(sizeFiltro) || sizeFiltro <= 0
+    
+        msgbox('INGRESE UN PARAMETRO VALIDO PARA EL FILTRO, NO PUEDE SER MENOR O IGUAL A CERO!');
+        return;
+    end
+
+filtroN = ones(sizeFiltro) / (sizeFiltro ^ 2);
+
+imgfiltroN = imfilter(imgCopy, filtroN);
+
+axes(handles.axes5);
+imshow(imgfiltroN);
+guidata(hObject,handles);
+
+function txtParametroN_Callback(hObject, eventdata, handles)
+% hObject    handle to txtParametroN (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of txtParametroN as text
+%        str2double(get(hObject,'String')) returns contents of txtParametroN as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function txtParametroN_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to txtParametroN (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
