@@ -13,7 +13,7 @@
 function [imagen, mapa, nombre, path, indx] = abrirImagen(UIAxes)
 
 % Abrir ventana para seleccionar archivo con extensión permitida
-[nombre, path, indx] = uigetfile('*.jpg;*.tif;*.bmp;*.ppm;*.mdl','Abrir');
+[nombre, path, indx] = uigetfile('*.jpg;*.tif;*.bmp;*.ppm;*.mdl;*.png','Abrir');
 if nombre==0
     return
 end
