@@ -1,6 +1,4 @@
-function erosion = operacionErosion(UIAxes)
-global imgProcesada
-global elemento
+function erosion = operacionErosion(imgProcesada, elemento)
 
 disp(elemento);
 
@@ -19,4 +17,4 @@ disp(matriz);
 
 erosion = imerode(imgProcesada, matriz);
 
-imshow(erosion, 'Parent', UIAxes);
+% imshow(erosion, 'Parent', UIAxes);

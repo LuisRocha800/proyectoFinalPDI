@@ -1,6 +1,4 @@
-function dilatacion = operacionDilatacion(UIAxes)
-global imgProcesada
-global elemento
+function dilatacion = operacionDilatacion(imgProcesada, elemento)
 
 valorTextArea = char(elemento);
 
@@ -15,4 +13,4 @@ end
 
 dilatacion = imdilate(imgProcesada, matriz);
 
-imshow(dilatacion, 'Parent', UIAxes);
+% imshow(dilatacion, 'Parent', UIAxes);
