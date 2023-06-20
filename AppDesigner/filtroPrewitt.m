@@ -1,26 +1,25 @@
-function prewittFilter = filtroPrewitt(UIAxes)
-global imgProcesada
+function prewittFilter = filtroPrewitt(imgProcesada)
 
 if size(imgProcesada, 3) == 3 % RGB
-        imagen_gris = rgb2gray(imgProcesada);
-filtro_prewitt = fspecial('prewitt');
-prewittFilter = imfilter(imagen_gris, filtro_prewitt);
+    imagen_gris = rgb2gray(imgProcesada);
+    filtro_prewitt = fspecial('prewitt');
+    prewittFilter = imfilter(imagen_gris, filtro_prewitt);
 
-imshow(prewittFilter, 'Parent', UIAxes);
+    % imshow(prewittFilter, 'Parent', UIAxes);
 
-    elseif islogical(imgProcesada) % Binaria
-        imagen_gris = uint8(imgProcesada) * 255;
+elseif islogical(imgProcesada) % Binaria
+    imagen_gris = uint8(imgProcesada) * 255;
 
-filtro_prewitt = fspecial('prewitt');
-prewittFilter = imfilter(imagen_gris, filtro_prewitt);
+    filtro_prewitt = fspecial('prewitt');
+    prewittFilter = imfilter(imagen_gris, filtro_prewitt);
 
-imshow(prewittFilter, 'Parent', UIAxes);
+    % imshow(prewittFilter, 'Parent', UIAxes);
 
-    else % Escala de grises
-        imagen_gris = imgProcesada;
+else % Escala de grises
+    imagen_gris = imgProcesada;
 
-filtro_prewitt = fspecial('prewitt');
-prewittFilter = imfilter(imagen_gris, filtro_prewitt);
+    filtro_prewitt = fspecial('prewitt');
+    prewittFilter = imfilter(imagen_gris, filtro_prewitt);
 
-imshow(prewittFilter, 'Parent', UIAxes);
+    % imshow(prewittFilter, 'Parent', UIAxes);
 end
