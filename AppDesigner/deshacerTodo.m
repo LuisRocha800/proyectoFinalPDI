@@ -1,6 +1,6 @@
-function allDeshacer = deshacerTodo(UIAxes)
-global img1
+% function allDeshacer = deshacerTodo(UIAxes)
+function allDeshacer = deshacerTodo(img1)
 
 allDeshacer = img1;
 
-imshow(allDeshacer, 'Parent', UIAxes);
+% imshow(allDeshacer, 'Parent', UIAxes);
