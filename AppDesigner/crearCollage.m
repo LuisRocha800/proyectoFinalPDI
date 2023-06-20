@@ -1,23 +1,10 @@
-function collage = crearCollage(UIAxes)
-global imgProcesada
-global imgImg
-global img2
-global img3
-global img4
-global img5
-global img6
-global img7
-global img8
+function collage = crearCollage(imgProcesada, img2, img3, img4, img5, img6, img7, img8, img9)
 
 if ndims(imgProcesada) == 3
 else
  imgProcesada = cat(3, imgProcesada, imgProcesada, imgProcesada);
 end
 
-if ndims(imgImg) == 3
-else
- imgImg = cat(3, imgImg, imgImg, imgImg);
-end
 
 if ndims(img2) == 3
 else
@@ -54,17 +41,22 @@ else
 img8 = cat(3, img8, img8, img8);
 end
 
+if ndims(img9) == 3
+else
+ img9 = cat(3, img9, img9, img9);
+end
+
 sizeDeseado = [1000, 800];
 
 a = imresize(imgProcesada, sizeDeseado);
-b = imresize(imgImg, sizeDeseado);
-c = imresize(img2, sizeDeseado);
-d = imresize(img3, sizeDeseado);
-e = imresize(img4, sizeDeseado);
-f = imresize(img5, sizeDeseado);
-g = imresize(img6, sizeDeseado);
-h = imresize(img7, sizeDeseado);
-i = imresize(img8, sizeDeseado);
+b = imresize(img2, sizeDeseado);
+c = imresize(img3, sizeDeseado);
+d = imresize(img4, sizeDeseado);
+e = imresize(img5, sizeDeseado);
+f = imresize(img6, sizeDeseado);
+g = imresize(img7, sizeDeseado);
+h = imresize(img8, sizeDeseado);
+i = imresize(img9, sizeDeseado);
 
 aa = size(a);
 bb = size(b);
@@ -88,5 +80,5 @@ disp(ii);
 
 collage = [a b c; d e f; g h i];
 
-imshow(collage, 'Parent', UIAxes);
+% imshow(collage, 'Parent', UIAxes);
    
