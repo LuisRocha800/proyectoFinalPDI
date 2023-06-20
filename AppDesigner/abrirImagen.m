@@ -1,47 +1,44 @@
 %%
-% FUNCIÓN: "abrirImagen".
-% Abre, carga y muestra una imagen en la ventana (en el componente UIAxes 
-% indicado como parámetro).
+% FUNCIÓN: "cargarImagen".
+% Abre ventana de selección de archivos. Permite al ususario seleccionar
+% una imagen y recupera la información de la imagen seleccionada.
+% Si se cancela la operación se retornan variables vacías.
 % 
-% Input:
-%       UIAxes: Componente de tipo 'app.UIAxes' donde se mostrará la imagen
 % Output:
-%       img:  Matriz de la imagen
-%       map:  mapa de color si es indexada o cero en caso contrario
+%       img:  matriz de la imagen
+%       map:  mapa de color
 %       path: ruta completa de la imagen
-%       type: tipo de imagen (rgb, indexada, escala de grises o binaria)
+%       type: tipo color de la imagen
 
-function [img, map, path, type] = abrirImagen(UIAxes)
+function [img, map, path, type] =  abrirImagen()
 
 % Abrir ventana para seleccionar imagen con extensión permitida
-[file, folder] = uigetfile('*.jpg;*.tif;*.bmp;*.ppm;*.mdl;*.png;*.jpeg','Abrir imagen');
-if file == 0
-    return
-end
+[file, folder] = uigetfile('*.bmp;*.jpg;*.jpeg;*.ppm;*.png;*.tif');
 
-% Crear ruta completa de la imagen
-path = fullfile(folder, file);
+% Terminar si se cierra la ventana
+if (file == 0)
+    img  = [];
+    map  = [];
+    path = [];
+    type = [];
+else
+    
+    % Crear ruta completa de la imagen
+    path = fullfile(folder, file);
 
-% Colocar la imagen en el UIAxes correspondiente, dependiendo su tipo
-if imfinfo(path).ColorType == "truecolor"
-    type = "truecolor";
-    map  = 0;
-    img  = imread(path);
-    imshow(img, 'Parent', UIAxes);
-elseif imfinfo(path).ColorType == "indexed"
-    type = "indexed";
-    [img, map] = imread(path);
-    imshow(img, map, 'Parent', UIAxes);
-elseif imfinfo(path).ColorType == "grayscale" 
-    if  imfinfo(path).BitDepth == 1 
-        type = "grayscale";
-        map  = 0;
-        img  = imread(path);
-        imshow(img, 'Parent', UIAxes);
+    if imfinfo(path).ColorType == "indexed"
+        [img, map] = imread(path);
+        type = "indexed";
     else
-        type = "grises";
-        map = 0;
-        img = imread(path);
-        imshow(img, 'Parent', UIAxes);
+        img  = imread(path);
+        map  = [];
+        if imfinfo(path).ColorType == "truecolor"
+            type = "truecolor"; 
+        elseif imfinfo(path).BitDepth == 1 
+            type = "binary"; 
+        else
+            type = "grayscale"; 
+        end
     end
+
 end
