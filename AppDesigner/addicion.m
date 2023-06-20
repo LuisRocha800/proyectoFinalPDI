@@ -1,5 +1,4 @@
-function imgadd = addicion(UIAxes)
-global imgProcesada
+function imgadd = addicion(imgProcesada)
 
 [filename,pathname]=uigetfile('*.jpg;*.tif;*.bmp;*.ppm;*.mdl;*.png','Abrir');
 imagenDos = imread(filename);
@@ -17,4 +16,4 @@ end
 
 imgadd = img1Sized + img2Sized;
 
-imshow(imgadd, 'Parent', UIAxes);
+% imshow(imgadd, 'Parent', UIAxes);

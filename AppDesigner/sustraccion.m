@@ -1,5 +1,4 @@
-function imgSus = sustraccion(UIAxes)
-global imgProcesada
+function imgSus = sustraccion(imgProcesada)
 
 [filename,pathname]=uigetfile('*.jpg;*.tif;*.bmp;*.ppm;*.mdl;*.png','Abrir');
 imagenDos = imread(filename);
@@ -17,4 +16,4 @@ end
 
 imgSus = img1Sized - img2Sized;
 
-imshow(imgSus, 'Parent', UIAxes);
+% imshow(imgSus, 'Parent', UIAxes);

@@ -1,6 +1,4 @@
-function mostrarHistrogramas()
-        global auxiliarHistogramOrig
-        global auxiliarHistogramEcu
+function mostrarHistrogramas(auxiliarHistogramOrig, auxiliarHistogramEcu)
 
     hist_original = imhist(auxiliarHistogramOrig);
 
