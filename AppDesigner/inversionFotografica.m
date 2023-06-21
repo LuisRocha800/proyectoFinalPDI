@@ -1,19 +1,22 @@
-function invFotografica = inversionFotografica(imgProcesada)
+%%
+% FUNCIÓN: "inversionFotografica".
+% Invierte imagen binaria aplicando inversion fotografica.
+% 
+% Input:
+%       img:  matriz de la imagen a invertir
+%       type: tipo de la imagen a invertir
+% Output:
+%       invFotografica: imagen invertida
 
-[filas, columnas, canales] = size(imgProcesada);
+function invFotografica = inversionFotografica(img, type)
 
-if ndims(imgProcesada) == 2 && islogical(imgProcesada)
-
-    msgbox('NO SE PUEDE HACER INVERSION FOTOGRAFICA A UNA IMAGEN BINARIA!');
-    return;
-
-elseif canales == 3
-    aux = 255 - imgProcesada;
-    invFotografica = rgb2gray(aux);
-    % imshow(invFotografica, 'Parent', UIAxes);
-
-else
-    valor_maximo = max(imgProcesada(:));
-    invFotografica = valor_maximo - imgProcesada;
-    % imshow(invFotografica, 'Parent', UIAxes);
+% Excepciones
+if ~(type == "grayscale")
+    if ~(type == "truecolor")
+        ME = MException('Image:TypeError', 'LA IMAGEN A INVERTIR DEBE ESTAR EN ESCALA DE GRISES O RGB.');
+        throw(ME)
+    end
 end
+
+% Funcionalidad
+invFotografica = 255 - img;

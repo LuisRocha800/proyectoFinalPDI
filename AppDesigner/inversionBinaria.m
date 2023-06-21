@@ -1,16 +1,20 @@
-function imagenBinaria = inversionBinaria(imgProcesada)
+%%
+% FUNCIÓN: "inversionBinaria".
+% Invierte imagen binaria aplicando inversion binaria.
+% 
+% Input:
+%       img:  imagen a invertir
+%       type: tipo de la imagen a invertir
+% Output:
+%       imagenBinaria: imagen invertida
 
-[filas, columnas, canales] = size(imgProcesada);
+function imagenBinaria = inversionBinaria(img, type)
 
-if ndims(imgProcesada) == 2 && islogical(imgProcesada)
-
-    imagenBinaria = ~imgProcesada;
-
-elseif canales == 3
-    imagen_gris = rgb2gray(imgProcesada);
-    imagenBinaria = imbinarize(imagen_gris);
-
-elseif canales == 1
-    imagenBinaria = imbinarize(imgProcesada);
-
+% Excepciones
+if ~(type == "binary")
+    ME = MException('Image:TypeError', 'LA IMAGEN A INVERTIR DEBE SER BINARIA.');
+    throw(ME)
 end
+
+% Funcionalidad
+imagenBinaria = 1 - img;
