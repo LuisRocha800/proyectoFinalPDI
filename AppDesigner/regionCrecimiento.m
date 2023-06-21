@@ -1,5 +1,8 @@
 function J=regionCrecimiento(I,x,y,reg_maxdist)
 
+if(exist('reg_maxdist','var')==0), reg_maxdist=0.2; end
+if(exist('y','var')==0), figure, imshow(I,[]),title('Seleccione el punto deseado con su cursor, despues de doble clic en la region deseada'); [y,x]=getpts; y=round(y(1)); x=round(x(1)); end
+
 J = zeros(size(I));
 Isizes = size(I);
 
@@ -41,7 +44,5 @@ while(pixdist<reg_maxdist&&reg_size<numel(I))
 end
 
 J=J>1;
-
-
 
 
