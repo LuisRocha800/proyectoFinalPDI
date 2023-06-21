@@ -2,61 +2,23 @@ function tipoNFilter = filtroTipoN(imgProcesada, parametro)
 
 if size(imgProcesada, 3) == 3 % RGB
     imagen_gris = rgb2gray(imgProcesada);
-  
-    disp(parametro)
-    tamano_filtro_str = str2double(parametro);
-    sizeFiltro = str2double(tamano_filtro_str);
-
-    % Verifica si el valor es válido
-    if isnan(sizeFiltro) || sizeFiltro <= 0
-    
-        msgbox('INGRESE UN PARAMETRO VALIDO PARA EL FILTRO, NO PUEDE SER MENOR O IGUAL A CERO!');
-        return;
+else
+    if islogical(imgProcesada) % Binaria
+        imagen_gris = uint8(imgProcesada) * 255;
+    else % Escala de grises
+        imagen_gris = imgProcesada;
     end
+end
 
-    filtroN = ones(sizeFiltro) / (sizeFiltro ^ 2);
+sizeFiltro = str2double(parametro);
 
-    tipoNFilter = imfilter(imagen_gris, filtroN);
+% Verifica si el valor es válido
+if isnan(sizeFiltro) || sizeFiltro <= 0
+    error('Ingrese un parámetro válido para el filtro. No puede ser menor o igual a cero.');
+end
 
-    % imshow(tipoNFilter, 'Parent', UIAxes);
+filtroN = ones(sizeFiltro) / (sizeFiltro ^ 2);
 
-elseif islogical(imgProcesada) % Binaria
-    imagen_gris = uint8(imgProcesada) * 255;
+tipoNFilter = imfilter(imagen_gris, filtroN);
 
-    tamano_filtro_str = str2double(parametro);
-
-    sizeFiltro = str2double(tamano_filtro_str);
-
-    % Verifica si el valor es válido
-    if isnan(sizeFiltro) || sizeFiltro <= 0
-    
-        msgbox('INGRESE UN PARAMETRO VALIDO PARA EL FILTRO, NO PUEDE SER MENOR O IGUAL A CERO!');
-        return;
-    end
-
-    filtroN = ones(sizeFiltro) / (sizeFiltro ^ 2);
-
-    tipoNFilter = imfilter(imagen_gris, filtroN);
-
-    % imshow(tipoNFilter, 'Parent', UIAxes);
-else % Escala de grises
-    imagen_gris = imgProcesada;
-
-
-    tamano_filtro_str = str2double(parametro);
-
-    sizeFiltro = str2double(tamano_filtro_str);
-
-    % Verifica si el valor es válido
-    if isnan(sizeFiltro) || sizeFiltro <= 0
-    
-        msgbox('INGRESE UN PARAMETRO VALIDO PARA EL FILTRO, NO PUEDE SER MENOR O IGUAL A CERO!');
-        return;
-    end
-
-    filtroN = ones(sizeFiltro) / (sizeFiltro ^ 2);
-
-    tipoNFilter = imfilter(imagen_gris, filtroN);
-
-    % imshow(tipoNFilter, 'Parent', UIAxes);
 end
