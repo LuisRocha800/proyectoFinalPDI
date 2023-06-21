@@ -7,7 +7,8 @@ function mostrarHistrogramas(histO, histE, imgP, imgE)
 % Input:
 %       imgO: matriz de la imagen original
 %       imgE: matriz de la imagen ecualizada
-%       imgP: matriz actual de la imagen procesada
+%       imgP: matriz actual de la imagen procesada actual
+%       imgE: matriz de la imagen ecualizada
 
 % Excepciones
 if isempty(histE)
