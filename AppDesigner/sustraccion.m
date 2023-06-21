@@ -1,71 +1,40 @@
-function imgSus = sustraccion(imgProcesada)
+%%
+% FUNCIÓN: "sustraccion".
+% Realiza sustraccion de imagenes. Las operaciones se hacen entre imagenes 
+% del mismo tipo y solo permite operar con binarias, escala de grises y rgb.
+% La imagen resultante tiene el tamanio de la img operada mas chica.
+% 
+% Input:
+%       img1: matriz de la imagen original
+%       img2: matriz de la imagen que se sustrae
+% Output:
+%       result: matriz resultante de la sustraccion img1 - img2
 
-[filas, columnas, canales] = size(imgProcesada);
+function result = sustraccion(img1, type1, img2, type2)
 
-[filename,pathname]=uigetfile('*.jpg;*.tif;*.bmp;*.ppm;*.mdl;*.png','Abrir');
-%imagenDos = imread(filename);
+% Excepciones
+if or( (type1 == "indexed"), (type2 == "indexed") )
+    ME = MException('Image:TypeError', 'OPERACION NO DISPONIBLE PARA IMAGENES INDEXADAS.');
+    throw(ME)
+end
+if ~(type1 == type2)
+    ME = MException('Image:TypeError', 'LAS IMAGENES DEBEN SER DEL MISMO TIPO.');
+    throw(ME)
+end
 
-% Terminar si se cierra la ventana
-if (filename == 0)
-    img  = [];
-    map  = [];
-    path = [];
-    type = [];
-else
-
-    path = fullfile(pathname, filename);
-     [imagenDos, map] = imread(path);
+% Funcionalidad
+size1 = size(img1);
+size2 = size(img2);
+if type1 == "truecolor"
     
-[filas2, columnas2, canales2] = size(imagenDos);
-
+    size1(:,3) = [];
+    size2(:,3) = [];
 end
-
-if canales == 3 && canales2 == 3
-
-%imgProcesada = rgb2gray(imgProcesada);
-%imagenDos = rgb2gray(imagenDos);
-imgSus = imsubtract(imgProcesada,imagenDos);
-
-elseif canales == 3 && canales2 == 1
-
-    imgProcesada = rgb2gray(imgProcesada);
-    imgSus = imsubtract(imgProcesada,imagenDos);
-
-elseif canales == 1 && canales2 == 3
-
-    imagenDos = rgb2gray(imagenDos);
-    imgSus = imsubtract(imgProcesada,imagenDos);
-
-elseif canales == 1 && canales2 == 1
-
-    imgSus = imsubtract(imgProcesada,imagenDos);
-
-elseif canales == 3 && ndims(imagenDos) == 2 && islogical(imagenDos)
- 
-imgProcesada = rgb2gray(imgProcesada);
-imagenDos = uint8(imagenDos) * 255;
-imgSus = imsubtract(imgProcesada,imagenDos);
-
-elseif canales == 1 && ndims(imagenDos) == 2 && islogical(imagenDos)
- 
-imagenDos = uint8(imagenDos) * 255;
-imgSus = imsubtract(imagenDos,imgProcesada);
-
-elseif  ndims(imgProcesada) == 2 && islogical(imgProcesada) && canales2 == 3
- 
-imgProcesada =  uint8(imgProcesada) * 255;
-imagenDos = rgb2gray(imagenDos);
-imgSus = imsubtract(imagenDos,imgProcesada);
-
-elseif  ndims(imgProcesada) == 2 && islogical(imgProcesada) && canales2 == 1
- 
-imgProcesada =  uint8(imgProcesada) * 255;
-imgSus = imsubtract(imgProcesada,imagenDos);
-
-elseif  ndims(imgProcesada) == 2 && islogical(imgProcesada) && ndims(imagenDos) == 2 && islogical(imagenDos)
- 
-imgSus = imsubtract(imgProcesada,imagenDos);
-
-else
-    msgbox('UNA DE LAS IMAGENES CORRESPONDE A UN FORMATO DESCONOCIDO');
+if ~(isequal(size1, size2))
+    if prod(size1) > prod(size2)
+        img1 = imresize(img1, size2);
+    else
+        img2 = imresize(img2, size1);
+    end
 end
+result = img1 - img2;
